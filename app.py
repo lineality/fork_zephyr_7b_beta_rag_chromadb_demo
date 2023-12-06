@@ -8,9 +8,23 @@ from langchain.embeddings import HuggingFaceBgeEmbeddings
 from io import BytesIO
 from langchain.document_loaders import PyPDFLoader
 import gradio as gr
+from dotenv import load_dotenv
 
+# safe environment variables
+load_dotenv()
+access_token = api_token = os.getenv('api_token_1') 
+
+"""
+select model:
+
+https://hf.co/settings/tokens
+https://huggingface.co/TheBloke/zephyr-7B-beta-GGUF
 
 local_llm = "zephyr-7b-beta.Q5_K_S.gguf"
+
+"""
+local_llm = "zephyr-7b-beta.Q2_K.gguf"
+
 
 config = {
 'max_new_tokens': 1024,
@@ -26,6 +40,7 @@ llm = CTransformers(
     model=local_llm,
     model_type="mistral",
     lib="avx2", #for CPU use
+    token= access_token,
     **config
 )
 
